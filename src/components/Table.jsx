@@ -28,7 +28,7 @@ const Tabla = ({ data = null, columns = null, refreshFunction }) => {
   };
 
   return (
-    <Paper sx={{ width: "90%", overflow: "hidden", m: 2, marginLeft: 8 }}>
+    <Paper sx={{ width: "90%", overflow: "hidden", m: 2, marginLeft: 4 }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -36,7 +36,7 @@ const Tabla = ({ data = null, columns = null, refreshFunction }) => {
               {columns &&
                 columns.map((head, index) => (
                   <TableCell
-                    sx={{ fontSize: 19 }}
+                    sx={{ fontSize: 14 }}
                     key={index}
                     style={{
                       minWidth: columns.minWidth,
