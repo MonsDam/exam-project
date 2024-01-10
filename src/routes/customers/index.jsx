@@ -1,27 +1,11 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-// import customersServices from "../../services/customers";
 import Tabla from "../../components/Table";
-import { createClient } from "@supabase/supabase-js";
 import FormDialog from "./actions/add";
-
-const supabaseKey ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhaGl0ampra3FhZGN1cHhtdGZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ2NzkyMzQsImV4cCI6MjAyMDI1NTIzNH0.7flvDW9JJLPXluBtGrivdfhO5vJZsf3fqHCxfh-u6vg';
-const supabaseUrl = 'https://sahitjjkkqadcupxmtfl.supabase.co';
-
-  const supabase = createClient(supabaseUrl, supabaseKey)
+import { supabase } from "../../services/config/config";
 
 function Customers() {
     const [customers, setCustomers] = useState([]);
-
-    // const getData = async () => {
-    //     customersServices.getAll()
-    //       .then((response) => {
-    //         setCustomers(response.data.data);
-    //       })
-    //       .catch((error) => {
-    //         console.log(error)
-    //       });
-    //   };
 
       useEffect(() => {
         getData();

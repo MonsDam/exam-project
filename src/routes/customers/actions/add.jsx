@@ -6,9 +6,35 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/material';
 import AddForm from './form';
+import { useState } from "react";
+// import { supabase } from '../../../services/config/config';
 
 export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+//   const [dataSend, setDataSend] = useState({
+//     name: "",
+//     lastname: "",
+//     secondlastname: "",
+//     age: null,
+//     email:"",
+//     gender: "",
+//     curp: ""
+// })
+
+// console.log("dialog", dataSend)
+
+// const handleAddCustomer = async(event) => {
+//     event.preventDefault();
+
+//     const newCustomer = {
+//         dataSend
+//     };
+
+//     const result = await supabase.from('customers').insert(newCustomer).select().single();
+//     setDataSend("");
+
+//     console.log(result);
+// }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,8 +57,8 @@ export default function FormDialog() {
             <AddForm />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={handleClose}>Guardar</Button>
+          {/* <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleAddCustomer}>Guardar</Button> */}
         </DialogActions>
       </Dialog>
     </React.Fragment>
