@@ -7,9 +7,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/material';
 import AddForm from './form';
 import { useState } from "react";
-// import { supabase } from '../../../services/config/config';
 
-export default function FormDialog() {
+export default function FormDialog({refreshFunction, customers, accounts}) {
+    console.log("addAccount", accounts);
+    console.log("addCustom", customers);
+
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -24,13 +26,13 @@ export default function FormDialog() {
     <React.Fragment>
     <Box sx={{ display: "flex" }}>
       <Button variant="outlined" sx={{ ml: "auto", mr:10 }} onClick={handleClickOpen}>
-        Crear cliente
+        Crear cuenta
       </Button>
     </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Crear Cliente</DialogTitle>
         <DialogContent>
-            <AddForm />
+            <AddForm customers={customers} accounts={accounts} />
         </DialogContent>
         <DialogActions>
           {/* <Button onClick={handleClose}>Cancelar</Button>

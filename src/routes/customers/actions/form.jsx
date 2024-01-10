@@ -6,6 +6,24 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useState } from "react";
 import { supabase } from "../../../services/config/config";
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+    name: Yup.string().matches(/^[A-Za-z]+$/, 'Solo se permiten letras').required('Campo requerido'),
+    lastname: Yup.string().matches(/^[A-Za-z]+$/, 'Solo se permiten letras').required('Campo requerido'),
+    secondlastname: Yup.string().matches(/^[A-Za-z]+$/, 'Solo se permiten letras').required('Campo requerido'),
+    email: Yup.string()
+    .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, 'Correo electrónico no válido')
+    .required('Campo requerido'),
+    age: Yup.number()
+    .typeError('Debe ser un número')
+    .positive('La edad debe ser un número positivo')
+    .integer('La edad debe ser un número entero')
+    .required('Campo requerido'),
+    curp: Yup.string().required('Campo requerido'),
+    gender: Yup.string().required('Campo requerido'),
+    
+  });
 
 const genderTypes = [
     {
@@ -35,16 +53,23 @@ function AddForm() {
         curp: ""
     })
 
+    const handleChange = (field, value) => {
+        setDataSend({ ...dataSend, [field]: value });
+      };
+
     const handleAddCustomer = async() => {
 
         setLoading(true);
         try{
-            console.log({dataSend})
+            await validationSchema.validate(dataSend, { abortEarly: false });
+            console.log('Datos válidos:', dataSend);
             const {data} =  await supabase.from('customers').insert(dataSend).select().single();
 
             console.log({data})
+            alert("datos guardados!")
         }  catch (error) {
             alert(error.message);
+            alert('Errores de validación:', error.errors);
           } 
           setLoading(false)
     }
@@ -59,7 +84,7 @@ function AddForm() {
                     margin="normal" 
                     variant="outlined" 
                     fullWidth 
-                    onChange={(e) => setDataSend({...dataSend, name: e.target.value})}
+                    onChange={(e) => handleChange('name', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={8}>
@@ -69,7 +94,7 @@ function AddForm() {
                     margin="normal" 
                     variant="outlined" 
                     fullWidth 
-                    onChange={(e) => setDataSend({...dataSend, lastname: e.target.value})}
+                    onChange={(e) => handleChange('lastname', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={8}>
@@ -79,7 +104,7 @@ function AddForm() {
                     margin="normal" 
                     variant="outlined" 
                     fullWidth 
-                    onChange={(e) => setDataSend({...dataSend, secondlastname: e.target.value})}
+                    onChange={(e) => handleChange('secondlastname', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={8}>
@@ -89,7 +114,7 @@ function AddForm() {
                     margin="normal" 
                     variant="outlined" 
                     fullWidth 
-                    onChange={(e) => setDataSend({...dataSend, age: e.target.value})}
+                    onChange={(e) => handleChange('age', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={8}>
@@ -99,7 +124,7 @@ function AddForm() {
                     margin="normal" 
                     variant="outlined" 
                     fullWidth 
-                    onChange={(e) => setDataSend({...dataSend, email: e.target.value})}
+                    onChange={(e) => handleChange('email', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={8}>
@@ -109,7 +134,7 @@ function AddForm() {
                     margin="normal" 
                     variant="outlined" 
                     fullWidth 
-                    onChange={(e) => setDataSend({...dataSend, curp: e.target.value})}
+                    onChange={(e) => handleChange('curp', e.target.value)}
                     /> 
                 </Grid>
             </Grid>
@@ -128,7 +153,7 @@ function AddForm() {
                                     value={genderType.value} 
                                     control={<Radio />} 
                                     label={genderType.label} 
-                                    onChange={(e) => setDataSend({...dataSend, gender: e.target.value})}
+                                    onChange={(e) => handleChange('gender', e.target.value)}
                                     />  
                                 ) )
                             }
